@@ -110,9 +110,9 @@ export default function WalletInfo() {
           padding: 10px;
           position: absolute;
           top: 100%;
-          left: 50%;
+          left: 95%;
           transform: translateX(-50%);
-          width: 220px;
+          width: 360px;
           box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
           text-align: left;
         }
