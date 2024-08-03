@@ -20,6 +20,8 @@ export default function WalletInfo() {
         if (accounts.length > 0) {
           const address = accounts[0];
           const balance = await provider.getBalance(address);
+
+          console.log("Setting account:", address);
           setAccount(address);
           setBalance(ethers.formatEther(balance));
         }
@@ -38,15 +40,12 @@ export default function WalletInfo() {
         const signer = await provider.getSigner();
         const address = await signer.getAddress();
         const balance = await provider.getBalance(address);
-  
-        console.log("Connected address:", address);
-        console.log("Balance:", ethers.formatEther(balance));
-  
-        setAccount(address); // Make sure this is a string
+
+        console.log("Setting account:", address);
+        setAccount(address);
         setBalance(ethers.formatEther(balance));
         setIsLoading(false);
-  
-        console.log("Redirecting to product page...");
+
         router.push('/product');
       } catch (error) {
         console.error("Error connecting to MetaMask:", error);
@@ -56,18 +55,29 @@ export default function WalletInfo() {
       alert("MetaMask is not installed. Please install it to use this feature.");
     }
   };
-  
-  useEffect(() => {
-    console.log("Account state:", account);
-    console.log("Balance state:", balance);
-  }, [account, balance]);
+
+  const getDisplayAddress = (addr) => {
+    console.log("Rendering account:", addr);
+    if (typeof addr === 'string') {
+      return addr;
+    } else if (addr && typeof addr.address === 'string') {
+      return addr.address;
+    } else if (addr && typeof addr.toString === 'function') {
+      return addr.toString();
+    } else {
+      return 'Unknown Address';
+    }
+  };
 
   return (
     <div className="walletInfo">
       {account ? (
-        <div>
-          <p>Address: {typeof account === 'string' ? account : JSON.stringify(account)}</p>
-          <p>Balance: {balance} ETH</p>
+        <div className="walletDetails">
+          <p className="hoverText">Hover to see details</p>
+          <div className="walletHover">
+            <p>Address: {getDisplayAddress(account)}</p>
+            <p>Balance: {balance} ETH</p>
+          </div>
         </div>
       ) : (
         <button onClick={connectWallet} disabled={isLoading} className="loginButton">
@@ -87,6 +97,34 @@ export default function WalletInfo() {
           z-index: 1000;
           text-align: center;
           min-width: 200px;
+        }
+
+        .walletDetails {
+          position: relative;
+        }
+
+        .walletHover {
+          display: none;
+          background-color: #f1f1f1;
+          border-radius: 8px;
+          padding: 10px;
+          position: absolute;
+          top: 100%;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 220px;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+          text-align: left;
+        }
+
+        .walletDetails:hover .walletHover {
+          display: block;
+        }
+
+        .hoverText {
+          font-size: 0.9rem;
+          color: #6c757d;
+          margin-bottom: 5px;
         }
 
         .loginButton {

@@ -1,8 +1,12 @@
 import { useState, useEffect } from 'react';
 import WalletInfo from '../components/WalletInfo';
+import { ethers } from 'ethers';
 
 export default function Product() {
   const [products, setProducts] = useState([]);
+  const [provider, setProvider] = useState(null);
+  const [signer, setSigner] = useState(null);
+  const [account, setAccount] = useState(null);
 
   useEffect(() => {
     // Fetch product data from JSON file
@@ -16,7 +20,41 @@ export default function Product() {
       }
     }
     fetchProducts();
+
+    // Setup ethers.js provider and signer
+    if (window.ethereum) {
+      const newProvider = new ethers.BrowserProvider(window.ethereum);
+      setProvider(newProvider);
+      newProvider.getSigner().then((signer) => {
+        setSigner(signer);
+        signer.getAddress().then(setAccount);
+      });
+    }
   }, []);
+
+  const buyProduct = async (price) => {
+    if (!signer || !account) {
+      alert('Please connect your wallet first.');
+      return;
+    }
+
+    try {
+      const transaction = {
+        to: "0xEE094A71d8A47db268A35Ae3d3a2835113D0977e", // Replace with the seller's Ethereum address
+        value: ethers.parseEther(price), // Convert the price to wei
+        // you can add more transaction options here if needed
+      };
+
+      const txResponse = await signer.sendTransaction(transaction);
+      console.log('Transaction response:', txResponse);
+      alert('Transaction sent! Waiting for confirmation...');
+      await txResponse.wait();
+      alert('Transaction confirmed!');
+    } catch (error) {
+      console.error('Transaction failed:', error);
+      alert('Transaction failed!');
+    }
+  };
 
   return (
     <div className="container">
@@ -29,6 +67,9 @@ export default function Product() {
             <h2>{product.name}</h2>
             <p>{product.description}</p>
             <p className="price">Price: {product.price} ETH</p>
+            <button className="buyButton" onClick={() => buyProduct(product.price)}>
+              Buy
+            </button>
           </li>
         ))}
       </ul>
@@ -88,6 +129,23 @@ export default function Product() {
         .price {
           font-weight: bold;
           color: #343a40;
+        }
+
+        .buyButton {
+          padding: 10px 20px;
+          background-color: #28a745;
+          color: white;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          font-weight: bold;
+          transition: background-color 0.3s ease;
+          width: 100%;
+          margin-top: 10px;
+        }
+
+        .buyButton:hover {
+          background-color: #218838;
         }
       `}</style>
     </div>
