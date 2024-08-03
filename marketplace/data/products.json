@@ -1,0 +1,17 @@
+[
+    {
+      "id": 1,
+      "name": "NFT House",
+      "description": "This image depicts a futuristic and innovative house design featuring geometric shapes and a vibrant color palette.",
+      "price": "0.0004",
+      "image": "/images/img2.png"
+    },
+    {
+      "id": 2,
+      "name": "NFT Car",
+      "description": "Futuristic, sleek car with vibrant colors and abstract designs.",
+      "price": "0.0001",
+      "image": "/images/img1.png"
+    }
+  ]
+  
