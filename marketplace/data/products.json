@@ -3,15 +3,30 @@
       "id": 1,
       "name": "NFT House",
       "description": "This image depicts a futuristic and innovative house design featuring geometric shapes and a vibrant color palette.",
-      "price": "0.0004",
+      "price": "0.000004",
       "image": "/images/img2.png"
     },
     {
       "id": 2,
       "name": "NFT Car",
       "description": "Futuristic, sleek car with vibrant colors and abstract designs.",
-      "price": "0.0001",
+      "price": "0.000001",
       "image": "/images/img1.png"
+    },
+    {
+        "id": 3,
+        "name": "NFT Painting",
+        "description": "This image represents a digital painting with abstract design elements, vibrant colors, and geometric patterns.",
+        "price": "0.00003",
+        "image": "/images/img3.png"
+    },
+    {
+        "id": 4,
+        "name": "NFT PC",
+        "description": "This image showcases a futuristic personal computer with a sleek design, neon accents, and a digital environment.",
+        "price": "0.000001",
+        "image": "/images/img4.png"
     }
+    
   ]
   

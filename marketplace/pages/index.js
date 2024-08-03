@@ -6,7 +6,7 @@ export default function Home() {
       <WalletInfo />
       <header className="header">
         <h1>Welcome to Our Marketplace</h1>
-        <p>Discover amazing products curated just for you.</p>
+        <p>Discover amazing NFTs curated just for you.</p>
       </header>
       <style jsx>{`
         .container {
