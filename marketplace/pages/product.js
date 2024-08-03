@@ -102,6 +102,10 @@ export default function Product() {
           box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
           transition: transform 0.3s ease, box-shadow 0.3s ease;
           text-align: center;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between; /* Ensure button is aligned at the bottom */
+          height: 100%; /* Ensure all cards are of equal height */
         }
 
         .productItem:hover {
